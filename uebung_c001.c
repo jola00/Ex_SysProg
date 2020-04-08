@@ -21,10 +21,15 @@ char* strcopy(const char* source, char* dest) {
 
 int main()
 {
+    // initial string
     char gruss[] = "Hallo";
+
+    // test of stringlenght
     printf("Lenght of string %d \n", stringlenght(gruss));
-    char gruss1[10];
-    strcopy(gruss, gruss1);
-    printf(gruss1);
+
+    // test of strcopy
+    char gruss_copy[10];
+    strcopy(gruss, gruss_copy);
+    printf(gruss_copy);
     return 0;
 }
