@@ -1,30 +1,10 @@
 #define F_CPU 16000000UL
 #include <avr/io.h>
-#include <stdint.h>
 #include <stdlib.h>
 #include <avr/interrupt.h>
-#include <util/delay.h>
 #include "usart.h"
 
-
-uint8_t indexPoti = 0;
 char buffer[5];
-int value;
-/*
-// static volatile int ADCval;
-// 
-// int ADCsingleREAD()
-// {
-// 	ADCSRA |= (1 << ADSC);    // Start the ADC conversion
-// 
-// 	while(ADCSRA & (1 << ADSC));      // line waits for the ADC to finish
-// 
-// 	ADCval = ADCL;
-// 	ADCval = (ADCH << 8) + ADCval;    // ADCH is read so ADC can be updated again
-// 
-// 	return ADCval;
-// }
-*/
 
 int main(void)
 {
@@ -52,23 +32,13 @@ int main(void)
 
 ISR(ADC_vect)
 {
-	if (!indexPoti)	{
-		value = ADCH;
-		itoa(value, buffer, 10);
-		buffer[4] = '\0';
+	if (ADMUX & 0b00000001)	
+		usart_send_string("Poti 2: ");	
+	else 
 		usart_send_string("Poti 1: ");	
-		usart_send_string(buffer);
-		ADMUX |= 1;
-		indexPoti = 1;
-	}
-	else
-	{
-		value = ADCH;
-		itoa(value, buffer, 10);
-		buffer[4] = '\0';
-		usart_send_string("Poti 2: ");
-		usart_send_string(buffer);
-		ADMUX &= ~1;
-		indexPoti = 0;
-	}		
+
+	itoa(ADCH, buffer, 10);
+	buffer[4] = '\0';
+	usart_send_string(buffer); // send input value
+	ADMUX ^= 1;	// change ADC
 }
