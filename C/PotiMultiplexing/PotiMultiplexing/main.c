@@ -5,26 +5,14 @@
 #include <avr/interrupt.h>
 #include <util/delay.h>
 #include "usart.h"
-
+#define THRESHOLD  1
 
 uint8_t indexPoti = 0;
 char buffer[5];
-int value;
-/*
-// static volatile int ADCval;
-// 
-// int ADCsingleREAD()
-// {
-// 	ADCSRA |= (1 << ADSC);    // Start the ADC conversion
-// 
-// 	while(ADCSRA & (1 << ADSC));      // line waits for the ADC to finish
-// 
-// 	ADCval = ADCL;
-// 	ADCval = (ADCH << 8) + ADCval;    // ADCH is read so ADC can be updated again
-// 
-// 	return ADCval;
-// }
-*/
+static volatile int value0 = 0;
+static volatile int value1 = 0;
+static volatile int temp_val = 0;
+static uint8_t changed = 1;
 
 int main(void)
 {
@@ -46,28 +34,50 @@ int main(void)
 	sei();    
 	
 	while (1)	{
-		;
+		if (changed)	{
+			itoa(value0, buffer, 10);
+			buffer[4] = '\0';
+			usart_send_string("Poti 1: ");
+			usart_send_string(buffer);
+			itoa(value1, buffer, 10);
+			buffer[4] = '\0';
+			usart_send_string("Poti 2: ");
+			usart_send_string(buffer);
+			changed = 0;
+		}
+		
 	}
 }
 
 ISR(ADC_vect)
 {
 	if (!indexPoti)	{
-		value = ADCH;
-		itoa(value, buffer, 10);
-		buffer[4] = '\0';
-		usart_send_string("Poti 1: ");	
-		usart_send_string(buffer);
+		while(ADCSRA & (1 << ADSC));
+		temp_val = ADCH;
+		if (abs(temp_val - value0) > THRESHOLD)	{
+			//changed = 1;
+			value0 = temp_val;
+			itoa(value0, buffer, 10);
+			buffer[4] = '\0';
+			usart_send_string("Poti 1: ");
+			usart_send_string(buffer);
+		}
 		ADMUX |= 1;
 		indexPoti = 1;
 	}
 	else
 	{
-		value = ADCH;
-		itoa(value, buffer, 10);
-		buffer[4] = '\0';
-		usart_send_string("Poti 2: ");
-		usart_send_string(buffer);
+		while(ADCSRA & (1 << ADSC));
+		temp_val = ADCH;
+		if (abs(temp_val - value1) > THRESHOLD)	{
+			//changed = 1;
+			value1 = temp_val;
+			itoa(value1, buffer, 10);
+			buffer[4] = '\0';
+			usart_send_string("Poti 2: ");
+			usart_send_string(buffer);
+			//changed = 0;
+		}
 		ADMUX &= ~1;
 		indexPoti = 0;
 	}		
