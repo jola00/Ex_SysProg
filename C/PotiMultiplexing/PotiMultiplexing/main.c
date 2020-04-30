@@ -52,6 +52,7 @@ int main(void)
 ISR(ADC_vect)
 {
 	if (!indexPoti)	{
+		while(ADCSRA & (1 << ADSC));
 		temp_val = ADCH;
 		if (abs(temp_val - value0) > THRESHOLD)	{
 			//changed = 1;
@@ -66,6 +67,7 @@ ISR(ADC_vect)
 	}
 	else
 	{
+		while(ADCSRA & (1 << ADSC));
 		temp_val = ADCH;
 		if (abs(temp_val - value1) > THRESHOLD)	{
 			//changed = 1;
