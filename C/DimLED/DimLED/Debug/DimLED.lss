@@ -92,9 +92,9 @@ uint8_t direction = 1;
 static void inline init()   {
 	DDRD |= (1 << DDD6);
   96:	56 9a       	sbi	0x0a, 6	; 10
-	DDRD |= (1 << DDD6);     // PD6 is now an output
+	DDRD |= (1 << DDD6);    
   98:	56 9a       	sbi	0x0a, 6	; 10
-	OCR0A = 255;     // set PWM for 100% duty cycle
+	OCR0A = 0xFF;     // set PWM for 100% duty cycle
   9a:	8f ef       	ldi	r24, 0xFF	; 255
   9c:	87 bd       	out	0x27, r24	; 39
 	TCCR0A |= (1 << COM0A1);     // set none-inverting mode
@@ -116,7 +116,7 @@ static void inline init()   {
 			if (OCR0A==255)
 			direction = 1;
   b0:	91 e0       	ldi	r25, 0x01	; 1
-	TCCR0B |= (1 << CS01);     // set prescaler to 8 and starts PWM
+	
 }
 
 static void loop()  {
@@ -168,9 +168,9 @@ static void loop()  {
   ec:	87 b5       	in	r24, 0x27	; 39
   ee:	88 0f       	add	r24, r24
   f0:	87 bd       	out	0x27, r24	; 39
-				OCR0A += 1;
+				OCR0A |= 1;
   f2:	87 b5       	in	r24, 0x27	; 39
-  f4:	8f 5f       	subi	r24, 0xFF	; 255
+  f4:	81 60       	ori	r24, 0x01	; 1
   f6:	87 bd       	out	0x27, r24	; 39
   f8:	2f ef       	ldi	r18, 0xFF	; 255
   fa:	33 ed       	ldi	r19, 0xD3	; 211

@@ -16,7 +16,7 @@
 #define MYUBRR FOSC/16/BAUD -1
 
 void usart_init(void);
-void usart_send(const uint8_t to_send);
+void usart_send(const char* to_send);
 void usart_send_string(const char* to_send);
 uint8_t usart_receive(void);
 
