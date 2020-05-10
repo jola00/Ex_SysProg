@@ -302,9 +302,8 @@ END GROUP
                 0x000000a2                __vector_20
                 0x000000a6                . = ALIGN (0x2)
  *(.text.*)
- .text.ADCsingleREAD
-                0x000000a6       0x44 main.o
-                0x000000a6                ADCsingleREAD
+ .text.ADCRead  0x000000a6       0x44 main.o
+                0x000000a6                ADCRead
  .text.main     0x000000ea       0x52 main.o
                 0x000000ea                main
  .text.usart_init
@@ -483,12 +482,12 @@ END GROUP
  .debug_frame   0x00000000       0x44 main.o
  .debug_frame   0x00000044       0x60 usart.o
 
-.debug_str      0x00000000      0x48f
+.debug_str      0x00000000      0x520
  *(.debug_str)
  .debug_str     0x00000000      0x208 D:/Programme/Atmel Studio/7.0/Packs/atmel/ATmega_DFP/1.3.300/gcc/dev/atmega328p/avr5/crtatmega328p.o
- .debug_str     0x00000208      0x251 main.o
-                                0x28f (size before relaxing)
- .debug_str     0x00000459       0x36 usart.o
+ .debug_str     0x00000208      0x23e main.o
+                                0x27c (size before relaxing)
+ .debug_str     0x00000446       0xda usart.o
                                 0x21f (size before relaxing)
 
 .debug_loc      0x00000000      0x118

@@ -44,12 +44,12 @@ static inline void mainloop()
 			for(int i = 0; i < count; ++i){
 				setBit(currentBit+i*direction);
 				delBit(currentBit+(i-count)*direction);
-        }
+			}
 
-		currentBit+=direction;
-		if(currentBit < -1 || currentBit > 9)
-			direction *= -1;
-		_delay_ms(50);
+			currentBit+=direction;
+			if(currentBit > 9)
+				direction *= -1;
+			_delay_ms(50);
 		}
 	}
 	else  {

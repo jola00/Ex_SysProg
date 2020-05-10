@@ -31,11 +31,10 @@ int main(void)
 	
     usart_init();
 	
-	// use ADC0 as input and Avcc as reference
+	// use ADC0 as input with 10 bit resolution and Avcc as reference
 	ADMUX = 0;         
 	ADMUX |= (1 << REFS0);   
-	 
-	ADMUX &= ~(1 << ADLAR);   // 10 bit resolution
+	ADMUX &= ~(1 << ADLAR);
 	
     while (1)	{	
 		value = ADCRead();
