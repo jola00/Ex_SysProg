@@ -19,7 +19,7 @@ int main(void)
 	ADCSRB = 0;               // 0 for free running mode
 
 	ADCSRA |= (1 << ADEN);    // Enable the ADC
-	ADCSRA |= (1 << ADIE);    // Enable Interrupts
+	ADCSRA |= (1 << ADIE);    // Enable Interrupts for ADC
 
 	ADCSRA |= (1 << ADSC);    // Start the ADC conversion
 

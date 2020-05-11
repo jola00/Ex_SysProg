@@ -27,7 +27,6 @@ int ADCRead()
 int main(void)
 {
 	char buffer[5];
-	int value;
 	
     usart_init();
 	
@@ -37,8 +36,7 @@ int main(void)
 	ADMUX &= ~(1 << ADLAR);
 	
     while (1)	{	
-		value = ADCRead();
-		itoa(value, buffer, 10);
+		itoa(ADCRead(), buffer, 10);
 		buffer[4] = '\0';
 		usart_send_string(buffer);
 		_delay_ms(500);
