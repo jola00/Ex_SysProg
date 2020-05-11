@@ -109,9 +109,9 @@ static void inline init()   {
   aa:	85 b5       	in	r24, 0x25	; 37
   ac:	82 60       	ori	r24, 0x02	; 2
   ae:	85 bd       	out	0x25, r24	; 37
-		}
-		else
-		direction = 0;
+			}
+			else
+			direction = 0;
 		else {
 			if (OCR0A==255)
 			direction = 1;
@@ -125,11 +125,11 @@ static void loop()  {
   b2:	80 91 00 01 	lds	r24, 0x0100	; 0x800100 <__data_start>
   b6:	88 23       	and	r24, r24
   b8:	99 f0       	breq	.+38     	; 0xe0 <main+0x4a>
-		if (OCR0A)	{
+			if (OCR0A)	{
   ba:	87 b5       	in	r24, 0x27	; 39
   bc:	88 23       	and	r24, r24
   be:	69 f0       	breq	.+26     	; 0xda <main+0x44>
-			OCR0A >>= 1;
+				OCR0A >>= 1;
   c0:	87 b5       	in	r24, 0x27	; 39
   c2:	86 95       	lsr	r24
   c4:	87 bd       	out	0x27, r24	; 39
@@ -149,10 +149,10 @@ static void loop()  {
   d4:	00 c0       	rjmp	.+0      	; 0xd6 <main+0x40>
   d6:	00 00       	nop
   d8:	ec cf       	rjmp	.-40     	; 0xb2 <main+0x1c>
-			_delay_ms(1000);
-		}
-		else
-		direction = 0;
+				_delay_ms(1000);
+			}
+			else
+			direction = 0;
   da:	10 92 00 01 	sts	0x0100, r1	; 0x800100 <__data_start>
   de:	e9 cf       	rjmp	.-46     	; 0xb2 <main+0x1c>
 		else {

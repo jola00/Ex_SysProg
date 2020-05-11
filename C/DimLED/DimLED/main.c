@@ -7,7 +7,7 @@ uint8_t direction = 1;
 
 static void inline init()   {
 	DDRD |= (1 << DDD6);
-	DDRD |= (1 << DDD6);    
+	  
 	OCR0A = 0xFF;     // set PWM for 100% duty cycle
 	TCCR0A |= (1 << COM0A1);     // set none-inverting mode
 	TCCR0A |= (1 << WGM01) | (1 << WGM00);     // set fast PWM Mode
